@@ -787,7 +787,6 @@ if (defined $options{'removeadmingroups'}){
 
 # --set-proxy-addresses <entry>
 if (defined $options{'set-proxy-addresses'}){
-    #my @permissions=split(/,/,$custom_multi_1);
     &AD_group_update({ldap=>$ldap,
                      root_dse=>$root_dse,
                      dn=>$dn_pro,

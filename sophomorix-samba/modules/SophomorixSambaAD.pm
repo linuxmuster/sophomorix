@@ -8115,8 +8115,6 @@ sub AD_group_update {
         my @proxy_addresses=split(/,/,$proxy_addresses_set);
         @proxy_addresses = reverse @proxy_addresses;
         print "   * Setting proxyAddresses to: @proxy_addresses\n";
-        #my $proxy_addresses_string=join("|",@proxy_addresses);
-        #$update_log_string=$update_log_string."\"proxyAddresses=".$proxy_addresses_string."\",";
         my $mesg = $ldap->modify($dn,replace => {'proxyAddresses' => \@proxy_addresses }); 
         &AD_debug_logdump($mesg,2,(caller(0))[3]);
     }
