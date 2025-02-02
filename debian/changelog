@@ -1,3 +1,9 @@
+sophomorix4 (7.3.3) lmn73; urgency=medium
+
+  * Update workflow with right repo name. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 02 Feb 2025 15:59:57 +0100
+
 sophomorix4 (7.3.2) lmn73; urgency=medium
 
   * Add ssh host key. 
