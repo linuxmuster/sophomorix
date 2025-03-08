@@ -93,8 +93,6 @@ $Data::Dumper::Terse = 1;
             );
 
 
-
-
 # formatted printout
 ######################################################################
 sub print_line {
@@ -4550,6 +4548,7 @@ sub load_school_ini {
 	    }
 
             if ($name eq "students" or
+                $name eq "parents" or
                 $name eq "extrastudents"or
                 $name eq "teachers"
 		){
@@ -6234,6 +6233,10 @@ sub get_homedirectory {
         $smb_rel_path="teachers/".$user;
         $homedirectory="\\\\".$dns."\\".$school_smbshare."\\teachers\\".$user;
         $unix_home=$DevelConf::homedir_all_schools."/".$school."/teachers/".$user;
+    } elsif ($role eq "parent"){
+        $smb_rel_path="parents/".$user;
+        $homedirectory="\\\\".$dns."\\".$school_smbshare."\\parents\\".$user;
+        $unix_home=$DevelConf::homedir_all_schools."/".$school."/parents/".$user;
     } elsif ($role eq $ref_sophomorix_config->{'INI'}{'EXAMMODE'}{'USER_ROLE'}){
         # examuser
         if ($group_basename eq ""){

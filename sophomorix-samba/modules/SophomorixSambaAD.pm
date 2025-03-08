@@ -965,6 +965,10 @@ sub AD_repdir_using_file {
             $group_type="teacherclass";
             $groupvar_seen++;
         }
+        if (/\@\@PARENTCLASS\@\@/) {
+            $group_type="parentclass";
+            $groupvar_seen++;
+        }
         if (/\@\@PROJECT\@\@/) {
             $group_type="project";
             $groupvar_seen++;
@@ -1021,6 +1025,7 @@ sub AD_repdir_using_file {
             $dir=~s/>\$homedir_global</${DevelConf::homedir_global}/;
             # other
             $dir=~s/>\$directory_students</${DevelConf::directory_students}/;
+            $dir=~s/>\$directory_parents</${DevelConf::directory_parents}/;
             $dir=~s/>\$directory_teachers</${DevelConf::directory_teachers}/;
             $dir=~s/>\$directory_projects</${DevelConf::directory_projects}/;
             $dir=~s/>\$directory_management</${DevelConf::directory_management}/;
@@ -1078,6 +1083,8 @@ sub AD_repdir_using_file {
                 @groups=($project);
             } elsif (defined $teacherclass){
                 @groups=($teacherclass);
+            } elsif (defined $parentclass){
+                @groups=($parentclass);
             } elsif (defined $adminclass){
                 @groups=($adminclass);
             } elsif (defined $extraclass){
@@ -2486,7 +2493,29 @@ sub AD_user_create {
                                    sophomorix_result=>$ref_sophomorix_result,
                                  });
         }
-    }  
+    } elsif ($role eq "parent"){
+        if ($school eq $ref_sophomorix_config->{'INI'}{'GLOBAL'}{'SCHOOLNAME'}){
+            &AD_repdir_using_file({root_dns=>$root_dns,
+                                   repdir_file=>"repdir.parent_home",
+                                   school=>$ref_sophomorix_config->{'INI'}{'VARS'}{'GLOBALSHARENAME'},
+                                   adminclass=>$group,
+                                   student_home=>$login,
+                                   smb_admin_pass=>$smb_admin_pass,
+                                   sophomorix_config=>$ref_sophomorix_config,
+                                   sophomorix_result=>$ref_sophomorix_result,
+                                 });
+        } else {
+            &AD_repdir_using_file({root_dns=>$root_dns,
+                                   repdir_file=>"repdir.parent_home",
+                                   school=>$school,
+                                   adminclass=>$group,
+                                   student_home=>$login,
+                                   smb_admin_pass=>$smb_admin_pass,
+                                   sophomorix_config=>$ref_sophomorix_config,
+                                   sophomorix_result=>$ref_sophomorix_result,
+                                 });
+        }
+    }
 
     &Sophomorix::SophomorixBase::print_title("Creating user $user_count: $login (end)");
     print "\n";
@@ -5103,6 +5132,7 @@ sub AD_get_AD_for_check {
            $forbidden_warn="$sam forbidden, $sam exists already as a sophomorix user";
            if ($role eq $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'STUDENT'} or
                $role eq $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'TEACHER'} or
+               $role eq $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'PARENT'} or
                $role eq "schooladministrator" or 
                $role eq "globaladministrator"
               ){
@@ -7361,7 +7391,7 @@ sub AD_get_groups_v {
             $groups{'COUNTER'}{$schoolname}{'status_by_type'}{$type}{$status}++;
             $groups{'COUNTER'}{$schoolname}{'by_type'}{$type}++;
             push @{ $groups{'LISTS'}{'GROUP_by_sophomorixSchoolname'}{$schoolname}{$type} },$sam;
-            if ($type eq "adminclass" or $type eq "teacherclass" or $type eq "extraclass"){
+            if ($type eq "adminclass" or $type eq "teacherclass" or $type eq "extraclass" or $type eq "parentclass"){
                 $groups{'COUNTER'}{$schoolname}{'by_type'}{'class'}++;
                 push @{ $groups{'LISTS'}{'GROUP_by_sophomorixSchoolname'}{$schoolname}{'class'} },$sam;
             }
@@ -8762,6 +8792,13 @@ sub AD_group_create {
         #                       sophomorix_config=>$ref_sophomorix_config,
         #                       sophomorix_result=>$ref_sophomorix_result,
         #                     });
+    } elsif ($type eq "parentclass"){
+        # add <token>-parents to all-parents
+        &AD_group_addmember({ldap => $ldap,
+                             root_dse => $root_dse,
+                             group => $ref_sophomorix_config->{'INI'}{'VARS'}{'HIERARCHY_PREFIX'}."-".$DevelConf::parent,
+                             addgroup => $group,
+                           });
     } elsif ($type eq "room"){
         #my $token_examaccounts=&AD_get_name_tokened($DevelConf::examaccount,$school,"examaccount");
         ## add the room to <token>-examaccounts
