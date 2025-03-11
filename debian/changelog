@@ -1,3 +1,10 @@
+sophomorix4 (7.3.4) lmn73; urgency=medium
+
+  * Handle parents accounts
+  * Generate passwords with diceware (thanks @raphael247) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Mar 2025 13:33:15 +0100
+
 sophomorix4 (7.3.3) lmn73; urgency=medium
 
   * Update workflow with right repo name. 
