@@ -1202,7 +1202,7 @@ sub AD_repdir_using_file {
                                                                    });
                    } elsif ($entry_type eq "LINUX"){
                         mkdir $path_after_user;
-                        my $chown_command="chown ".$owner.".".$groupowner." ".$path_after_user;
+                        my $chown_command="chown ".$owner.":".$groupowner." ".$path_after_user;
                         print "          $chown_command\n";
                         system($chown_command);
                         chmod oct($permission), $path_after_user;
