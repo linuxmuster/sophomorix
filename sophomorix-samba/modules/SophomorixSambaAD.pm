@@ -5947,7 +5947,7 @@ sub AD_get_quota {
     }
 
     # USER quota (sophomorix user)
-    my $filter2="(&(objectClass=user) (| (sophomorixRole=student) (sophomorixRole=teacher) ) )";
+    my $filter2="(&(objectClass=user) (| (sophomorixRole=student) (sophomorixRole=teacher) (sophomorixRole=parent) ) )";
     $mesg = $ldap->search( # perform a search
                    base   => $root_dse,
                    scope => 'sub',
