@@ -4549,6 +4549,7 @@ sub load_school_ini {
 
             if ($name eq "students" or
                 $name eq "parents" or
+                $name eq "staff" or
                 $name eq "extrastudents"or
                 $name eq "teachers"
 		){
