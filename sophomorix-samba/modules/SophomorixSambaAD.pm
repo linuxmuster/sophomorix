@@ -1558,17 +1558,14 @@ sub AD_group_kill {
 	} elsif ($type eq "project"){
             # delete the share, when succesful the group
             if ($smb_share ne  "unknown"){
+                my $smbclient_command_rmdir = $ref_sophomorix_config->{'INI'}{'EXECUTABLES'}{'SMBCLIENT'}.
+                    " --debuglevel=0 -U ".$DevelConf::sophomorix_file_admin."%'******' ".
+                    $unc." -c 'deltree \"$smb_rel_path_share\";'";
 
-                # rewrite smb_dir with msdfs root
-                $smb_share=&Sophomorix::SophomorixBase::rewrite_smb_path($smb_share,$ref_sophomorix_config);
+                my $return1=&Sophomorix::SophomorixBase::smb_command($smbclient_command_rmdir,$smb_admin_pass);
 
-                my $smb = new Filesys::SmbClient(username  => $DevelConf::sophomorix_file_admin,
-                                                 password  => $smb_admin_pass,
-                                                 debug     => 0);
-
-                my $return1=$smb->rmdir_recurse($smb_share);
-                if($return1==1){
-                    print "OK: Deleted with succes $smb_share\n"; # smb://linuxmuster.local/<school>/subdir1/subdir2
+                if($return1==0){
+                    print "OK: Deleted with success $smb_share\n"; # smb://linuxmuster.local/<school>/subdir1/subdir2
                     # deleting the AD account
                     my $command=$ref_sophomorix_config->{'INI'}{'EXECUTABLES'}{'SAMBA_TOOL'}.
                         " group delete ". $group;
