@@ -6230,6 +6230,10 @@ sub get_homedirectory {
         $smb_rel_path="students/".$group_basename."/".$user;
         $homedirectory="\\\\".$dns."\\".$school_smbshare."\\students\\".$group_basename."\\".$user;
         $unix_home=$DevelConf::homedir_all_schools."/".$school."/students/".$group_basename."/".$user;
+    } elsif ($role eq "staff"){
+        $smb_rel_path="staff/".$group_basename."/".$user;
+        $homedirectory="\\\\".$dns."\\".$school_smbshare."\\staff\\".$group_basename."\\".$user;
+        $unix_home=$DevelConf::homedir_all_schools."/".$school."/staff/".$group_basename."/".$user;
     } elsif ($role eq "teacher"){
         $smb_rel_path="teachers/".$user;
         $homedirectory="\\\\".$dns."\\".$school_smbshare."\\teachers\\".$user;
