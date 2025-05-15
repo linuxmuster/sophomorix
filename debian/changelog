@@ -1,3 +1,14 @@
+sophomorix4 (7.3.6) lmn73; urgency=medium
+
+  * Fix chown command
+  * Fix quota for parents
+  * Add complete support for staff members
+  * Fix install of repdir for parents
+  * Update quotas for new users after add
+  * Fix delete of projects on file server (thanks @hermanntoast)  
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 15 May 2025 21:12:26 +0200
+
 sophomorix4 (7.3.5) lmn73; urgency=medium
 
   * Fix AD group parents. 
