@@ -7,7 +7,7 @@
 
 import sys
 from linuxmusterTools.common import *
-from linuxmusterTools.ldapconnector import LMNLdapReader as lr, LMNUser, LMNSchoolclass
+from linuxmusterTools.ldapconnector import LMNUser, LMNSchoolclass, LMNStudent
 
 
 epoch = sys.argv[1]
@@ -38,9 +38,10 @@ for entry in entries:
 
             # Student moving from a schoolclass to another, eventually attic
 
-            # Removing student / student's parents from old students / parents group
-            schoolclass_students_groups_to_update.add(old_group)
-            schoolclass_parents_groups_to_update.add(old_group)
+            if old_group != 'attic':
+                # Removing student / student's parents from old students / parents group
+                schoolclass_students_groups_to_update.add(old_group)
+                schoolclass_parents_groups_to_update.add(old_group)
 
             if new_group == 'attic':
                 # Delete CN in Student-Parents
@@ -55,14 +56,26 @@ for entry in entries:
             # Teacher moves to attic to be deleted. It's necessary to remove this
             # teacher from all teachers groups
 
-            pass
+            teacher = LMNUser(user)
+            for c in teacher.data.schoolclasses:
+                schoolclass_teachers_groups_to_update.add(c)
 
         elif old_group == 'parents' and new_group == 'attic':
 
-            # Parent moves to attic to be deleted. It's necessary to remove this
-            # parent from all parents groups and from all Student-Parents' entries
+            # Parent moves to attic to be deleted.
 
-            pass
+            parent = LMNUser(user)
+            parent.get_children()
+
+            # Remove parent from all parents groups in students
+            for schoolclass in parent.children_schoolclasses:
+                schoolclass_parents_groups_to_update.add(schoolclass)
+
+            # Remove parent from Student-Parents' entries
+            for student_cn in parent.children_cn:
+                student = LMNStudent(student_cn)
+                student.remove_parent(user)
+
 
 for schoolclass in schoolclass_students_groups_to_update:
     lprint.info(f"Updating students group of schoolclass {schoolclass}")
