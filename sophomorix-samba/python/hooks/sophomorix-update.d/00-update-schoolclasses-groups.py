@@ -45,7 +45,9 @@ for entry in entries:
 
             if new_group == 'attic':
                 # Delete CN in Student-Parents
-                pass
+                student = LMNStudent(user)
+                student.parents_group.delete()
+
             else:
                 # Adding student / student's parents to new students / parents group
                 schoolclass_students_groups_to_update.add(new_group)
