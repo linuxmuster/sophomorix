@@ -59,7 +59,7 @@ for entry in entries:
             # teacher from all teachers groups
 
             teacher = LMNUser(user)
-            for c in teacher.data.schoolclasses:
+            for c in teacher.data['schoolclasses']:
                 schoolclass_teachers_groups_to_update.add(c)
 
         elif old_group == 'parents' and new_group == 'attic':
