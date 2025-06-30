@@ -1,3 +1,10 @@
+sophomorix4 (7.3.9) lmn73; urgency=medium
+
+  * Update teachers groups of schoolclasses if membership changes 
+  * Extend sophomorix-query to parent and staff
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Jun 2025 21:10:42 +0200
+
 sophomorix4 (7.3.8) lmn73; urgency=medium
 
   * Update hook scripts for students groups. 
