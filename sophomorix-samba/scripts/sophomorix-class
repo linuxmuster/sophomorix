@@ -952,7 +952,7 @@ if (defined $options{'removeadmins'}){
 # Update teachers groups like 8a-teachers if adminlists has changed (--removeadmins, --addadmins, --admins)
 if ($update_teachers_groups == 1){
     foreach my $class_valid (@{ $classes{'CLASS_VALID_LIST'} }) {
-        system("python3 /usr/local/sbin/lmntools-class -c $class_valid -t -s $classes{'CLASS_VALID_DATA'}{$class_valid}{'SCHOOL'}");
+        system("/usr/sbin/lmncli -c $class_valid --sync-teachers -s $classes{'CLASS_VALID_DATA'}{$class_valid}{'SCHOOL'}");
     }
 }
 
