@@ -1,3 +1,9 @@
+sophomorix4 (7.3.10) lmn73; urgency=medium
+
+  * Use lmncli instead of lmntools. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 14 Jul 2025 21:07:12 +0200
+
 sophomorix4 (7.3.9) lmn73; urgency=medium
 
   * Update teachers groups of schoolclasses if membership changes 
