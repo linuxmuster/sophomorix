@@ -16,4 +16,4 @@ Actively developed | ✅  YES
 Maintainer organisation |  Linuxmuster.net e.V.  
 Primary maintainer | Rüdiger Beck \<jeffbeck@web.de\>
   
-** The linuxmuster community consits of people who are nice and happy to help. They are not directly involved in the development though, and might not be able to help in any case.
+* The linuxmuster community consits of people who are nice and happy to help. They are not directly involved in the development though, and might not be able to help in any case.
