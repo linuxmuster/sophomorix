@@ -1439,6 +1439,10 @@ sub AD_computer_update {
     my ($arg_ref) = @_;
     my $ldap = $arg_ref->{ldap};
     my $root_dse = $arg_ref->{root_dse};
+    my $school = $arg_ref->{school};
+    my $room_basename = $arg_ref->{room_basename};
+    my $filename = $arg_ref->{filename};
+    my $name = $arg_ref->{name};
     my $computer = $arg_ref->{computer};
     my $computer_count = $arg_ref->{computer_count};
     my $attrs_count = $arg_ref->{attrs_count};
@@ -1485,6 +1489,24 @@ sub AD_computer_update {
         my $mesg = $ldap->modify( $dn,
                           replace => { %{ $ref_replace->{$computer}{'REPLACE'} } } 
                          );
+
+        # Check if must be moved to new DN
+        if (defined $room_basename) {
+            my $room_ou=$ref_sophomorix_config->{'FILES'}{'DEVICE_FILE'}{$filename}{'GROUP_OU'};
+            $room_ou=~s/\@\@FIELD_1\@\@/$room_basename/g;
+            my $dn_room = $room_ou.",OU=".$school.",".$DevelConf::AD_schools_ou.",".$root_dse;
+            my $new_dn="CN=".$name.",".$dn_room;
+            my $rdn="CN=".$name;
+
+            if (not $new_dn eq $dn) {
+                &AD_object_move({ldap=>$ldap,
+                         dn=>$dn,
+                         rdn=>$rdn,
+                         target_branch=>$dn_room,
+                        });
+            }
+        }
+
         &AD_debug_logdump($mesg,2,(caller(0))[3]);
     } else {
         print "\nNot updating, $max results found for computer $computer\n\n";

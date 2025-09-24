@@ -6,6 +6,7 @@
 
 # modules
 use strict;
+use warnings;
 use Getopt::Long;
 Getopt::Long::Configure ("bundling");
 use Sophomorix::SophomorixConfig;
@@ -736,6 +737,7 @@ foreach my $device (keys %{$devices_file{'computer'}}) {
                 # no update if equal
             } else {
                 $update_computer{$device}{'REPLACE'}{'sophomorixComputerRoom'}=$devices_file{'computer'}{$device}{'sophomorixComputerRoom'};
+                $update_computer{$device}{'REPLACE'}{'sophomorixAdminClass'}=$devices_file{'computer'}{$device}{'sophomorixComputerRoom'};
                 $update++;
             }
         }
@@ -1318,6 +1320,10 @@ if ($sync==1 and $no_sync==0){ # $no_sync==0 -> SYNC
                              replace=>\%update_computer,
                              max_computer_count=>$max_computer_count_update,
                              json=>$json,
+                             school=>$devices_file{'computer'}{$computer}{'SCHOOL'},
+                             room_basename=>$devices_file{'computer'}{$computer}{'ROOM_BASENAME'},
+                             filename=>$devices_file{'computer'}{$computer}{'FILENAME'},
+                             name=>$devices_file{'computer'}{$computer}{'COMPUTER'},
                              sophomorix_config=>\%sophomorix_config,
                              sophomorix_result=>\%sophomorix_result,
                            });
