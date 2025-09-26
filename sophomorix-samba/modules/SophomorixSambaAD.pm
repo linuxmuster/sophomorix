@@ -5894,12 +5894,11 @@ sub AD_create_new_mail {
 	    $mail_local_part=$lastname.".".$firstname;
     } elsif ($ref_sophomorix_config->{'ROLES'}{$school}{$role}{'MAIL_LOCAL_PART_SCHEME'} eq "manual"){
         return $mail_old;
-    }elsif ($ref_sophomorix_config->{'ROLES'}{$school}{$role}{'MAIL_LOCAL_PART_SCHEME'} ne ""){
+    } elsif ($ref_sophomorix_config->{'ROLES'}{$school}{$role}{'MAIL_LOCAL_PART_SCHEME'} ne ""){
         my $error_message="$ref_sophomorix_config->{'ROLES'}{$school}{$role}{'MAIL_LOCAL_PART_SCHEME'} not allowed as 'MAIL_LOCAL_PART_SCHEME' in school '".$school_file.
                           "' | Allowed: firstname|lastname|firstname.lastname|lastname.firstname|manual";
         &Sophomorix::SophomorixBase::log_script_exit($error_message,1,1,0,
                          $ref_arguments,$ref_sophomorix_result,$ref_sophomorix_config,$json);
-
     }
 
     # override MAIL_LOCAL_PART by MAIL_LOCAL_PART_MAP, if there
