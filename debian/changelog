@@ -1,3 +1,11 @@
+sophomorix4 (7.3.11) lmn73; urgency=medium
+
+  * [device] Fix new room name for devices
+  * [device] Ensure room group exists and membership before adding device
+  * [print] Add option to not split firstname and lastname
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 12 Oct 2025 21:18:23 +0200
+
 sophomorix4 (7.3.10) lmn73; urgency=medium
 
   * Use lmncli instead of lmntools. 
