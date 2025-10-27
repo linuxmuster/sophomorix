@@ -1,3 +1,10 @@
+sophomorix4 (7.3.12) lmn73; urgency=medium
+
+  * Fix target branch in AD_user_move for new roles.
+  * Fix creation of subdirectories in staff tree. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 27 Oct 2025 23:54:28 +0100
+
 sophomorix4 (7.3.11) lmn73; urgency=medium
 
   * [device] Fix new room name for devices
