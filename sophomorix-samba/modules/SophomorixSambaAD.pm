@@ -914,6 +914,8 @@ sub AD_repdir_using_file {
     my $teacherclass = $arg_ref->{teacherclass};
     my $teacher_home = $arg_ref->{teacher_home};
     my $adminclass = $arg_ref->{adminclass};
+    my $staffclass = $arg_ref->{staffclass};
+    my $parentclass = $arg_ref->{parentclass};
     my $extraclass = $arg_ref->{extraclass};
     my $subdir = $arg_ref->{subdir};
     my $student_home = $arg_ref->{student_home};
@@ -3748,7 +3750,10 @@ sub AD_user_move {
     my $group_type_new;
     if (defined $ref_sophomorix_config->{'SCHOOLS'}{$school_new}{'GROUP_TYPE'}{$group_new}){
         $group_type_new=$ref_sophomorix_config->{'SCHOOLS'}{$school_new}{'GROUP_TYPE'}{$group_new};
-    } else{
+    } elsif ($role_new eq "staff") {
+        # Special case for staff in order to create a category in the staff directory
+        $group_type_new = "staffclass";
+    } else {
         $group_type_new="adminclass";
     }
 
@@ -8861,7 +8866,7 @@ sub AD_group_create {
         &AD_repdir_using_file({root_dns=>$root_dns,
                                    repdir_file=>"repdir.staffclass",
                                    school=>$school,
-                                   adminclass=>$group,
+                                   staffclass=>$group,
                                    smb_admin_pass=>$smb_admin_pass,
                                    sophomorix_config=>$ref_sophomorix_config,
                                    sophomorix_result=>$ref_sophomorix_result,
