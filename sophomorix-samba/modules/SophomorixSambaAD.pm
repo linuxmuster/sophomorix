@@ -3774,6 +3774,10 @@ sub AD_user_move {
     } elsif ($role_new eq "teacher"){
 #         $target_branch="OU=".$group_new_basename.",OU=Teachers,OU=".$school_new.",".$DevelConf::AD_schools_ou.",".$root_dse;
          $target_branch="OU=Teachers,OU=".$school_new.",".$DevelConf::AD_schools_ou.",".$root_dse;
+    } elsif ($role_new eq "staff"){
+         $target_branch="OU=".$group_new_basename.",OU=Staff,OU=".$school_new.",".$DevelConf::AD_schools_ou.",".$root_dse;
+    } elsif ($role_new eq "parent"){
+         $target_branch="OU=Parents,OU=".$school_new.",".$DevelConf::AD_schools_ou.",".$root_dse;
     }
 
     my ($homedirectory_old,$unix_home_old,$unc_old,$smb_rel_path_old)=
@@ -3807,7 +3811,7 @@ sub AD_user_move {
     if($Conf::log_level>=1){
         print "\n";
         &Sophomorix::SophomorixBase::print_title("Moving user $user ($user_count),(start):");
-        print "   DN:             $dn\n";
+        print "   DN:                $dn\n";
         print "   Target DN:         $target_branch\n";
         print "   Group (Old):       $group_old ($group_old_basename)\n";
         print "   Group (New):       $group_new ($group_new_basename)\n";
@@ -3917,7 +3921,7 @@ sub AD_user_move {
 
     # change management groups if school changes
     if ($school_old ne $school_new){
-        &Sophomorix::SophomorixBase::print_title("School $school_old --> $school_new, managment groups change (start)");
+        &Sophomorix::SophomorixBase::print_title("School $school_old --> $school_new, management groups change (start)");
         my @grouplist=("wifi","internet","webfilter","intranet","printing");
         # removing
         foreach my $group (@grouplist){
@@ -3938,7 +3942,7 @@ sub AD_user_move {
                                             addmember => $user,
                                            }); 
         }
-        &Sophomorix::SophomorixBase::print_title("School $school_old --> $school_new, managment groups change (start)");
+        &Sophomorix::SophomorixBase::print_title("School $school_old --> $school_new, management groups change (start)");
     }
 
 

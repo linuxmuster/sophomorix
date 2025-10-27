@@ -2036,7 +2036,7 @@ sub edit_distance {
         $string=$string2;
         $pattern=$string1;
     } else {
-	$string=$string1;
+	    $string=$string1;
         $pattern=$string2;
     }
     my $edit_distance=adist($pattern,$string);
