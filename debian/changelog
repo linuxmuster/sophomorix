@@ -1,3 +1,9 @@
+sophomorix4 (7.3.13) lmn73; urgency=medium
+
+  * Add kill log when users are in status R. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 02 Jan 2026 11:57:45 +0100
+
 sophomorix4 (7.3.12) lmn73; urgency=medium
 
   * Fix target branch in AD_user_move for new roles.
