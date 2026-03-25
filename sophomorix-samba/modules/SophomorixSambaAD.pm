@@ -4857,6 +4857,8 @@ sub AD_get_AD_for_repair {
         my $filter="(&(objectClass=user)(|(sophomorixRole=".
            $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'STUDENT'}.")(sophomorixRole=".
            $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'TEACHER'}.")(sophomorixRole=".
+           $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'PARENT'}.")(sophomorixRole=".
+           $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'STAFF'}.")(sophomorixRole=".
            $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'GLOBALADMINISTRATOR'}.")(sophomorixRole=".
            $ref_sophomorix_config->{'INI'}{'ROLE_USER'}{'SCHOOLADMINISTRATOR'}.")))";
         $mesg = $ldap->search( # perform a search
